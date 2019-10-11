@@ -1,3 +1,4 @@
+import tensorflow as tf
 from tensorflow.keras.layers import Input, Flatten, concatenate
 from tensorflow.keras.models import Model, Sequential
 from tensorflow.keras.layers import BatchNormalization
@@ -9,6 +10,7 @@ from os.path import join
 import sys
 import cv2
 import numpy as np
+import logging
 
 # parameters (no need to edit)
 t, c, w, h = 16, 3, 112, 112
@@ -17,6 +19,7 @@ upsample = 4
 
 def getCoarse2FineModel(summary=True):
 
+    tf.debugging.set_log_device_placement(True)
     # defined input
     videoclip_cropped = Input((c, t, h, w), name='input1')
     videoclip_original = Input((c, t, h, w), name='input2')
@@ -101,10 +104,13 @@ def predict_video(model, folder_in, output_path, mean_frame_path):
     # load frames to predict
     frames = []
     frame_list = os.listdir(folder_in)
+    logging.debug(frame_list)
     mean_frame = cv2.imread(mean_frame_path)
-    
+    logging
     for frame_name in frame_list:
-        frame = cv2.imread(join(folder_in, frame_name))
+        name = os.path.join(folder_in, frame_name)
+        
+        frame = cv2.imread(name)
         frames.append(frame.astype(np.float32) - mean_frame)
     print ('Done loading frames.')
 

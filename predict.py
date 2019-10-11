@@ -5,7 +5,7 @@ if __name__ == '__main__':
 
     output_dir_root = 'out'
     weights_file = 'weights/model_weights.h5'
-    dreyeve_data_dir = 'data_sample/54'
+    dreyeve_data_dir = 'Eye_case01'
 
     # load model for prediction
     model = getCoarse2FineModel(summary=True)
@@ -20,4 +20,4 @@ if __name__ == '__main__':
     # predict on sample data (first 200 frames of run 54 from DR(eye)VE
     predict_video(model, dreyeve_data_dir,
                   output_path=output_dir_root,
-                  mean_frame_path='data_sample/dreyeve_mean_frame.png')
+                  mean_frame_path='meanfigure.jpg')
